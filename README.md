@@ -1,11 +1,8 @@
-# Projeto Fullstack – FastAPI + React + Docker
+# docker-fullstack
 
-Projeto **Fullstack** desenvolvido com **React.js** no frontend e **FastAPI** no backend. O objetivo é integrar frontend e backend, utlizando comunicação via APIs e executando a aplicação com o **Docker**.
+## Estrutura do Projeto
 
-## 📁 Estrutura do Projeto
-
-
-```text
+```
 docker-fullstack/
 ├─ backend/
 │  ├─ main.py
@@ -15,155 +12,210 @@ docker-fullstack/
 │
 └─ frontend/
    ├─ src/
-   │   └── App.js
+   │   └─ App.js
    ├─ public/
-   │   └── index.html
+   │   └─ index.html
    ├─ package.json
    └─ Dockerfile
+```
 
 ---
 
 ## Funcionalidades
 
-**Backend**
+### Backend
 
-### ` GET /api01 `
+#### GET /api01
+
 Retorna uma lista de pessoas utilizando dados fixos no código.
 
-### ` GET /api02 `
-Retorna uma lista de pessoas carregadas a partir de um arquivo people.json
+#### GET /api02
+
+Retorna uma lista de pessoas carregadas a partir de um arquivo `people.json`.
 
 ---
 
 ## Tecnologias Utilizadas
 
 ### Backend
-- **Python**
-- **FastAPI**
-- **Uvicorn**
-- **Docker**
+
+* Python
+* FastAPI
+* Uvicorn
+* Docker
 
 ### Frontend
-- **React.js**
-- **Axios**
-- **Docker**
+
+* React.js
+* Axios
+* Docker
 
 ---
 
 ## Como executar o projeto
 
-Abaixo estão as instruções para rodar a aplicação tanto **localmente** quanto usando **Docker**.
+As instruções abaixo mostram como rodar a aplicação **localmente** e utilizando **Docker**.
 
 ---
 
 ## Requisitos
 
-Antes de começar, confira se você já possui:
+Antes de começar, verifique se você possui:
 
-- Python **3.9 ou superior**
-- Node.js com **npm**
-- Docker
-- Git
+* Python 3.9 ou superior
+* Node.js com npm
+* Docker
+* Git
 
 ---
 
 ## Passo inicial
 
-1. Faça o clone do repositório:
-   ```bash
-   git clone <repositorio>
+1. Clone o repositório:
+
+```bash
+git clone <repositorio>
+```
 
 2. Acesse a pasta do projeto:
 
+```bash
 cd docker-fullstack
+```
 
-3. Verifique se existem as pastas backend e frontend.
+3. Verifique se existem as pastas `backend` e `frontend`.
+
+---
 
 ## Rodando o Backend (FastAPI)
 
-**Execução local**
+### Execução local
 
 1. Entre na pasta do backend:
 
+```bash
 cd backend
+```
 
-2. Crie um ambiente virtual para evitar conflitos de dependências:
+2. Crie um ambiente virtual:
 
+```bash
 python -m venv venv
+```
 
 3. Ative o ambiente virtual:
 
 **Windows:**
 
+```bash
 venv\Scripts\activate
+```
 
 **Linux / macOS:**
 
+```bash
 source venv/bin/activate
+```
 
-4. Instale as dependências do projeto:
+4. Instale as dependências:
 
+```bash
 pip install -r requirements.txt
+```
 
 5. Inicie o servidor:
 
+```bash
 uvicorn main:app --reload
+```
 
 O backend estará disponível em:
+
+```
 http://localhost:8000
+```
+
+---
 
 ## Rodando o Frontend (React)
 
-**Execução local**
+### Execução local
 
-1. Abra outro terminal e entre na pasta do frontend:
+1. Em outro terminal, entre na pasta do frontend:
 
+```bash
 cd frontend
+```
 
 2. Instale as dependências:
 
+```bash
 npm install
+```
 
 3. Inicie o servidor de desenvolvimento:
 
+```bash
 npm start
+```
 
 O frontend ficará acessível em:
-http://localhost:3000
 
-Quando executar, o frontend se comunicará com o backend usando http://localhost:8000.
+```
+http://localhost:3000
+```
+
+Quando executado localmente, o frontend se comunica com o backend usando:
+
+```
+http://localhost:8000
+```
+
+---
 
 ## Executando com Docker
 
-**Construção das imagens**
+### Construção das imagens
 
-1. Na raiz do projeto, execute:
+Na raiz do projeto, execute:
 
+```bash
 docker build -t backend_atividade ./backend
 docker build -t frontend_atividade ./frontend
+```
 
-2. Criando a rede Docker
+---
 
-Criamos uma rede interna para permitir que os containers se comuniquem entre si:
+### Criando a rede Docker
 
+```bash
 docker network create fullstack
+```
 
-**Subindo os containers**
+---
 
-1. Inicie o backend:
+### Subindo os containers
 
+**Backend:**
+
+```bash
 docker run --rm --name backend_atividade --network fullstack -p 8000:8000 backend_atividade
+```
 
+**Frontend:**
 
-2. Em outro terminal, inicie o frontend:
-
+```bash
 docker run --rm --name frontend_atividade --network fullstack -p 3000:3000 frontend_atividade
+```
+
+---
 
 ## Comunicação entre frontend e backend no Docker
 
-Quando a aplicação for rodar via Docker, o frontend precisa acessar o backend usando o nome do container:
+Quando a aplicação estiver rodando via Docker, o frontend deve acessar o backend utilizando o nome do container:
 
+```
 http://backend_atividade:8000
+```
 
-
-Isso garante que a comunicação funcione corretamente dentro da rede Docker, pois os serviços se comunicam pelo nome do container e não por localhost.
+Isso garante que a comunicação funcione corretamente dentro da rede Docker, sem o uso de `localhost`.
