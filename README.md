@@ -1,4 +1,6 @@
-# docker-fullstack
+# Projeto Fullstack – FastAPI + React + Docker
+
+Projeto **Fullstack** desenvolvido com **React.js** no frontend e **FastAPI** no backend. O objetivo é integrar frontend e backend, utlizando comunicação via APIs e executando a aplicação com o **Docker**.
 
 ## Estrutura do Projeto
 
