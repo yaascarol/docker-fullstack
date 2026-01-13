@@ -1,18 +1,18 @@
 import './App.css';
-import axios from 'axios';
-import { useState, useEffect } from 'react';
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function App() {
-
-  const [people, setPeople] = useState([]);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    axios.get('/api').then(res => setPeople(res.data));
+    const path =
+      window.location.pathname === "/" ? "/api01" : window.location.pathname;
+
+    axios.get(path).then(res => setData(res.data));
   }, []);
 
-  return people.map((p, index) => {
-    return <p key={index}>{p.id}  {p.name}  {p.age}</p>
-  })
+  return <pre>{JSON.stringify(data, null, 2)}</pre>;
 }
 
 export default App;
